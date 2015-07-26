@@ -52,7 +52,7 @@
 		</tbody>
 		<tfoot>
         <tr>
-          <th colspan="6" class="ts-pager form-horizontal">
+          <th colspan="4" class="ts-pager form-horizontal">
             <button type="button" class="btn btn-primary"><i class="mdi-av-skip-previous"></i></div></button>
             <button type="button" class="btn btn-primary"><i class="mdi-navigation-chevron-left"></i></button>
             <span class="pagedisplay"></span> <!-- this can be any element, including an input -->

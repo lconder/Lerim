@@ -142,6 +142,7 @@ class Welcome extends CI_Controller {
 	{	
 		$id=$this->input->post('id');
 		$ids=$this->input->post('ids');
+		
 		$this->load->view('header');
 		$this->load->view('barra');
 		if($ids !== false)
