@@ -6,7 +6,6 @@ foreach($analisis->result() as $row)
 ?>
 <div class="container">
 	<div class="row">
-
 		<div class="col-md-9">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
@@ -37,6 +36,43 @@ foreach($analisis->result() as $row)
 <?php
 }
 ?>
+<div class="container">
+	<div class="row">
+		<div class="col-md-9">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+			   		<h1 class="panel-title"><input id="nuevoNombre" name="nuevoNombre" placeholder="Nombre del análisis" type="text" class="form-control"> </h1>
+			   	</div>
+			   	 <div class="row">
+		      		<div class="col-md-6">
+		        		<div class="panel-body">
+		        			<div class="row">
+      							<div class="col-md-6">
+        							<p><textarea  rows="3" id="nuevaDescripcion" name="nuevaDescripcion" placeholder="Descripción del análisis" type="text" class="form-control"></textarea></p>
+      							</div>
+      						<div class="col-md-6">
+        						<input id="nuevaUnidad" name="nuevaUnidad" placeholder="Unidad del análisis" type="text" class="form-control">
+      						</div>
+      					</div>			
+			    		</div>
+		      		</div>
+		      		<div class="col-md-6">
+		        		<div class="panel-body">
+			    			<p align="right">
+			    				
+                    				<label>
+                        				<input type="checkbox" id="otroAnalisis"  value="0" name="ids[]">Realizar
+                   					</label>
+                				
+                			</p>
+			    		</div>
+		      		</div>
+		    	</div>
+			</div>
+		</div>		   	
+	</div>
+</div>
+
 <input id="id" name="id" type="hidden" value=<?php echo $id;?> class="form-control" required="">
 <div class="form-group">
             <div class="col-lg-offset-2">

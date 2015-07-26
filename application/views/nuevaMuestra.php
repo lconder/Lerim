@@ -32,8 +32,15 @@
 	  				{?>
 	                    <option value=<?php echo $row->id;?>><?php echo $row->nombre?></option>
 	                  <?php }?>
+	                  	<option value="0"> Otro</option>
                 	</select>
 					</div>
+				</div>
+				<div  class="hide" class="form-group" id="divTipo">
+	  				<label class="col-lg-2 control-label" for="representante">Nuevo Tipo:</label>
+	  				<div class="col-xs-5">
+	    				<input id="nuevoTipo" name="nuevoTipo" type="text" class="form-control">  
+	  				</div>
 				</div>
 				
 

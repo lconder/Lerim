@@ -26,19 +26,22 @@ class modelo extends CI_Model
 	   return $query;
 	}
 
-	public function muestras(){
+	public function muestras()
+	{
 
-		$query=$this->db->query("SELECT id_muestra,muestras.nombre, tipos_muestras.nombre as tipo, muestras.fecha, muestras.hora, clientes.nombre as cliente FROM muestras, tipos_muestras, clientes WHERE muestras.tipo = tipos_muestras.id_tipo_muestra and muestras.cliente=clientes.id_cliente");
+		$query=$this->db->query("SELECT id_muestra,muestras.nombre, tipos_muestras.nombre as tipo, muestras.fecha, muestras.hora, clientes.nombre as cliente FROM muestras, tipos_muestras, clientes WHERE muestras.tipo = tipos_muestras.id_tipo_muestra and muestras.cliente=clientes.id_cliente ORDER BY muestras.fecha DESC");
 		if ($query->num_rows() == 0) 
 		  $query=FALSE; 
 	   return $query;
 	}
 
-	public function agregaCliente(){
+	public function agregaCliente()
+	{
 		$cliente=array(
 			'nombre'=>$this->input->post('nombre'),
 			'representante'=>$this->input->post('representante'),
 			'telefono'=>$this->input->post('telefono'),
+			'email'=>$this->input->post('email'),
 			'direccion'=>$this->input->post('direccion'),
 			'RFC'=>$this->input->post('rfc')
 		);
@@ -51,7 +54,7 @@ class modelo extends CI_Model
 	}
 
 	public function nuevaMuestra($id){
-		$query=$this->db->query("SELECT id_tipo_muestra as id, nombre FROM tipos_muestras");
+		$query=$this->db->query("SELECT id_tipo_muestra AS id, nombre FROM tipos_muestras WHERE nativo=1");
 		if($query->num_rows()==0)
 			$dataArray=false;
 		else{
@@ -94,13 +97,7 @@ class modelo extends CI_Model
 
 	public function cargaAnalisis($id){
 		$dataArray;
-		/*$this->db->select('id_tipo_analisis, tipos_analisis.nombre, descripcion');
-		$this->db->from('muestras');
-		$this->db->join('tipos_analisis','tipos_muestras=muestras.tipo');
-		$this->db->join('analisis','analisis.tipo!=id_tipo_analisis AND analisis.muestra = id_muestra');
-		$this->db->where('id_muestra',$id);
-		$query = $this->db->get();*/
-		$query = $this->db->query("SELECT id_tipo_analisis, tipos_analisis.nombre, descripcion FROM tipos_analisis,muestras WHERE tipos_muestras=muestras.tipo AND id_muestra=$id and id_tipo_analisis NOT IN (SELECT tipo FROM analisis WHERE muestra =$id)");
+		$query = $this->db->query("SELECT id_tipo_analisis, tipos_analisis.nombre, descripcion FROM tipos_analisis,muestras WHERE tipos_muestras=muestras.tipo AND id_muestra=$id AND tipos_analisis.nativo=1 AND id_tipo_analisis NOT IN (SELECT tipo FROM analisis WHERE muestra =$id)");
 		$dataArray['analisis']=$query;
 		$dataArray['id']=$id;
 	   return $dataArray;
@@ -110,12 +107,42 @@ class modelo extends CI_Model
 	public function guardaAnalisis($id,$ids)
 	{
 		foreach($ids as $selected){
+
 			$analisis=array(
 				'muestra'=>$id,
 				'tipo'=>$selected
 			);
 			$this->db->insert('analisis', $analisis);
 		}
+	}
+
+	public function otroAnalisis($nombre,$descripcion,$unidad,$id_muestra)
+	{
+		
+		$query = $this->db->query("SELECT tipo FROM muestras WHERE id_muestra=$id_muestra");
+		$tipos_muestras;
+		foreach($query->result() as $row)
+	  	{
+	  		$tipos_muestras=$row->tipo;
+	  	}
+		$analisis=array(
+			'nombre'=> $nombre,
+			'descripcion' => $descripcion,
+			'medida' => $unidad,
+			'nativo' => 0,
+			'tipos_muestras' => $tipos_muestras
+		);
+
+		$this->db->insert('tipos_analisis', $analisis);
+
+		$query = $this->db->query("SELECT id_tipo_analisis FROM tipos_analisis WHERE tipos_muestras=$tipos_muestras AND nombre='$nombre' AND descripcion='$descripcion' AND nativo=0 LIMIT 1");
+		$j;
+		foreach($query->result() as $row)
+	  	{
+	  		$j=$row->id_tipo_analisis;
+	  	}
+
+	  	return $j;
 	}
 
 	public function mostrarAnalisis($id)
@@ -137,5 +164,23 @@ class modelo extends CI_Model
 			$this->db->where('tipo',$selected);
 			$this->db->update('analisis',$analisis);
 		}
+	}
+
+	public function agregarTipoMuestra($nombre)
+	{
+		$muestra=array(
+			'nombre'=>$nombre,
+			'nativo'=>0	
+		);
+
+		$this->db->insert('tipos_muestras', $muestra);
+
+		$query = $this->db->query("SELECT id_tipo_muestra FROM tipos_muestras WHERE nombre='$nombre' AND nativo=0 LIMIT 1");
+		
+		foreach($query->result() as $row)
+	  	{
+	  		$query=$row->id_tipo_muestra;
+	  	}
+		return $query;
 	}
 }

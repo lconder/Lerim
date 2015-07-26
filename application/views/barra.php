@@ -13,9 +13,7 @@
             <li><a href="<?php echo base_url();?>index.php/welcome/muestras">Muestras</a></li>
 
         </ul>
-        <form class="navbar-form navbar-left">
-            <input type="text" class="form-control col-lg-8" placeholder="Buscar">
-        </form>
+
         <ul class="nav navbar-nav navbar-right">
             <li><a href="javascript:void(0)">Página</a></li>
             <li><a href="javascript:void(0)"></a></li>

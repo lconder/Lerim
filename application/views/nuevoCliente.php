@@ -22,6 +22,12 @@
 	    				<input id="telefono" name="telefono" type="number" placeholder="Teléfono" class="form-control" required="">
 	  				</div>
 	  			</div>
+	  			<div class="form-group">
+	  				<label class="col-lg-2 control-label" for="email">Email</label>
+	  				<div class="col-xs-5">
+	    				<input id="email" name="email" type="email" placeholder="email@ejemplo.com" class="form-control" required="">
+	  				</div>
+	  			</div>
 
 				<div class="form-group">
 	  				<label class="col-lg-2 control-label" for="direccion">Dirección</label>
