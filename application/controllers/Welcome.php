@@ -59,14 +59,23 @@ class Welcome extends CI_Controller {
 		$this->load->view('footer');
 	}
 
-	public function agregaMuestra(){
+	public function agregaMuestra()
+	{
+		$tipo=$this->input->post('tipo');
+		if($tipo == 0)
+		{
+			$nuevoNombre=$this->input->post('nuevoTipo');
+			$tipo=$this->modelo->agregarTipoMuestra($nuevoNombre);
+		}
+
 		$muestra=array(
 			'nombre'=>$this->input->post('nombre'),
 			'fecha'=>$this->input->post('fecha'),
 			'hora'=>$this->input->post('hora'),
-			'tipo'=>$this->input->post('tipo'),
+			'tipo'=>$tipo,
 			'cliente'=>$this->input->post('cliente')
 		);
+
 		$this->modelo->agregaMuestra($muestra);
 		$bio=$this->modelo->muestraBio($this->input->post('cliente'));
 		$this->load->view('header');
@@ -117,6 +126,7 @@ class Welcome extends CI_Controller {
 			'direccion' => $this->input->post('direccion'),
 			'telefono' => $this->input->post('telefono'),
 			'representante' => $this->input->post('representante'),
+			'email' => $this->input->post('email'),
 			'RFC' => $this->input->post('rfc')
 		);
 		$id=$this->input->post('id');
@@ -140,9 +150,21 @@ class Welcome extends CI_Controller {
 
 	public function guardarAnalisis()
 	{	
-		$id=$this->input->post('id');
+
 		$ids=$this->input->post('ids');
-		
+		$id=$this->input->post('id');
+
+		for($i=0;$i<count($ids);$i++)
+		{
+			if($ids[$i]===0)
+			{
+				$nombre=$this->input->post('nuevoNombre');
+				$descripcion=$this->input->post('nuevaDescripcion');
+				$unidad=$this->input->post('nuevaUnidad');
+				$j=$this->modelo->otroAnalisis($nombre,$descripcion,$unidad,$id);
+				$ids[$i]=$j;
+			}
+		}
 		$this->load->view('header');
 		$this->load->view('barra');
 		if($ids !== false)
