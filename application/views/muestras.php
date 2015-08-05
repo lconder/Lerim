@@ -7,7 +7,7 @@
         <th >Fecha</th>
         <th>Hora</th>
         <th>Cliente</th>
-        <th>Ánalisis</th>
+        <th>Análisis</th>
       </tr>
       </thead>
       <tbody>
@@ -20,7 +20,7 @@
             <td><?php echo $row->fecha;?></td>
             <td><?php echo $row->hora;?></td>
             <td><?php echo $row->cliente;?></td>
-            <td><a href="<?php echo base_url();?>index.php/welcome/posiblesAnalisis/<?php echo $row->id_muestra?>">&nbsp;<i class="mdi-content-add-circle-outline"></i></a></td>
+            <td><a href="<?php echo base_url();?>index.php/welcome/posiblesAnalisis/<?php echo $row->id_muestra?>" title="Agregar análisis">&nbsp;<i class="mdi-content-add-circle-outline"></i></a></td>
           </tr>
           <?php }?>
         </tbody>

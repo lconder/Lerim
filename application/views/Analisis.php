@@ -23,9 +23,17 @@ foreach($analisis->result() as $row)
 			    			<p align="right">
 			    				
                     				<label>
-                        				<input id="<?php echo $row->id_tipo_analisis;?>" name="<?php echo $row->id_tipo_analisis;?>" type="text" value="<?php echo $row->resultado;?>" class="form-control" >
+                        				<input id="<?php echo "resultado_".$row->id_tipo_analisis;?>" name="<?php echo "resultado_".$row->id_tipo_analisis;?>" type="text" value="<?php echo $row->resultado;?>" class="form-control" >
                         				<input type="checkbox" checked="checked" style="opacity:0" value="<?php echo $row->id_tipo_analisis;?>" name="ids[]">
                         				<?php echo $row->medida;?> 
+                   					</label>
+                				
+                			</p>
+                			<p align="right">
+			    				
+                    				<label>
+                        				<input id="<?php echo "ref_".$row->id_tipo_analisis;?>" name="<?php echo "ref_".$row->id_tipo_analisis;?>" type="text" value="<?php echo $row->referencia;?>" class="form-control" >
+                        				Referencia
                    					</label>
                 				
                 			</p>
@@ -42,7 +50,7 @@ foreach($analisis->result() as $row)
 <input id="id" name="id" type="hidden" value=<?php echo $id;?> class="form-control" required="">
 <div class="form-group">
             <div class="col-lg-offset-2">
-            	<a href="<?php echo base_url() ?>index.php?/Welcome/muestras" class="btn btn-default" role="button">Regresar</a>
+            	<a href="<?php echo base_url() ?>index.php?/<?php echo $this->session->userdata('urlAntigua');?>" class="btn btn-default" role="button">Regresar</a>
                 <button type="submit" class="btn btn-primary">Aceptar</button>
             </div>
         </div>

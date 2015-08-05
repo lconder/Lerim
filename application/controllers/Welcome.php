@@ -6,6 +6,7 @@ class Welcome extends CI_Controller {
 		parent::__construct();
 		$this->load->model('modelo');
 		$this->load->helper('url');
+		$this->load->library('session');
 	}
 
 
@@ -17,15 +18,18 @@ class Welcome extends CI_Controller {
 			
 	}
 
-	public function login(){
-
+	public function login()
+	{
+		$datasession = array(
+				'login' => $this->input->post('User'),
+             	'logueado' => true,
+             	'urlAntigua' => '',
+             	'urlActual' => uri_string()
+			);
 		if($this->modelo->login())
 		{
-			$datos['clientes']=$this->modelo->clientes();
-			$this->load->view('header');
-			$this->load->view('barra');
-			$this->load->view('inicio',$datos);
-			$this->load->view('footer');
+			$this->session->set_userdata($datasession);
+			redirect("Welcome/clientes");
 		}
 		else
 		{
@@ -36,7 +40,10 @@ class Welcome extends CI_Controller {
 		}
 	}
 
-	public function clientes(){
+	public function clientes()
+	{
+		$this->revisarSesion();
+		$this->backButton();
 		$datos['clientes']=$this->modelo->clientes();
 		$this->load->view('header');
 		$this->load->view('barra');
@@ -44,7 +51,10 @@ class Welcome extends CI_Controller {
 		$this->load->view('footer');
 	}
 
-	public function muestras(){
+	public function muestras()
+	{
+		$this->revisarSesion();
+		$this->backButton();
 		$datos['muestras']=$this->modelo->muestras();
 		$this->load->view('header');
 		$this->load->view('barra');
@@ -52,7 +62,10 @@ class Welcome extends CI_Controller {
 		$this->load->view('footer');
 	}
 
-	public function nuevoCliente(){
+	public function nuevoCliente()
+	{
+		$this->revisarSesion();
+		$this->backButton();
 		$this->load->view('header');
 		$this->load->view('barra');
 		$this->load->view('nuevoCliente');
@@ -61,6 +74,7 @@ class Welcome extends CI_Controller {
 
 	public function agregaMuestra()
 	{
+		$this->revisarSesion();
 		$tipo=$this->input->post('tipo');
 		if($tipo == 0)
 		{
@@ -75,22 +89,21 @@ class Welcome extends CI_Controller {
 			'tipo'=>$tipo,
 			'cliente'=>$this->input->post('cliente')
 		);
-
 		$this->modelo->agregaMuestra($muestra);
-		$bio=$this->modelo->muestraBio($this->input->post('cliente'));
-		$this->load->view('header');
-		$this->load->view('barra');
-		$this->load->view('cliente',$bio);
-		$this->load->view('footer');
+		redirect("Welcome/bio/".$this->input->post('cliente'));
 	}
 
-	public function agregaCliente(){
+	public function agregaCliente()
+	{
+		$this->revisarSesion();
 		$this->modelo->agregaCliente();
-		$this->clientes();
+		redirect("Welcome/clientes");
 	}
 
 	public function BIO()
 	{
+		$this->revisarSesion();
+		$this->backButton();
 		$id=$this->uri->segment(3);
 		$bio=$this->modelo->muestraBio($id);
 		$this->load->view('header');
@@ -101,6 +114,8 @@ class Welcome extends CI_Controller {
 
 	public function nuevaMuestra()
 	{
+		$this->revisarSesion();
+		$this->backButton();
 		$id=$this->uri->segment(3);
 		$datos=$this->modelo->nuevaMuestra($id);
 		$this->load->view('header');
@@ -111,6 +126,8 @@ class Welcome extends CI_Controller {
 
 	public function editarCliente()
 	{
+		$this->revisarSesion();
+		$this->backButton();
 		$id=$this->uri->segment(3);
 		$datos['cliente']=$this->modelo->buscaCliente($id);
 		$this->load->view('header');
@@ -119,7 +136,9 @@ class Welcome extends CI_Controller {
 		$this->load->view('footer');
 	}
 
-	public function actualizaCliente(){
+	public function actualizaCliente()
+	{
+		$this->revisarSesion();
 		$datos = array
 		(
 			'nombre' => $this->input->post('nombre'),
@@ -131,15 +150,13 @@ class Welcome extends CI_Controller {
 		);
 		$id=$this->input->post('id');
 		$this->modelo->actualizarCliente($id,$datos);
-		$bio=$this->modelo->muestraBio($id);
-		$this->load->view('header');
-		$this->load->view('barra');
-		$this->load->view('cliente',$bio);
-		$this->load->view('footer');
+		redirect("Welcome/bio/".$id);
 	}
 
 	public function Analisis()
 	{
+		$this->revisarSesion();
+		$this->backButton();
 		$id=$this->uri->segment(3);
 		$datos=$this->modelo->mostrarAnalisis($id);
 		$this->load->view('header');
@@ -150,13 +167,12 @@ class Welcome extends CI_Controller {
 
 	public function guardarAnalisis()
 	{	
-
+		$this->revisarSesion();
 		$ids=$this->input->post('ids');
 		$id=$this->input->post('id');
-
 		for($i=0;$i<count($ids);$i++)
 		{
-			if($ids[$i]===0)
+			if($ids[$i]==="0")
 			{
 				$nombre=$this->input->post('nuevoNombre');
 				$descripcion=$this->input->post('nuevaDescripcion');
@@ -165,18 +181,15 @@ class Welcome extends CI_Controller {
 				$ids[$i]=$j;
 			}
 		}
-		$this->load->view('header');
-		$this->load->view('barra');
 		if($ids !== false)
 			$this->modelo->guardaAnalisis($id,$ids);
-		$datos=$this->modelo->mostrarAnalisis($id);
-		$this->load->view('Analisis',$datos);
-		$this->load->view('footer');
-		
+		redirect("Welcome/Analisis/".$id);
 	}
 
 	public function posiblesAnalisis()
 	{
+		$this->revisarSesion();
+		$this->backButton();
 		$id=$this->uri->segment(3);
 		$datos=$this->modelo->cargaAnalisis($id);
 		$this->load->view('header');
@@ -187,13 +200,31 @@ class Welcome extends CI_Controller {
 	
 	public function actualizarAnalisis()
 	{
+		$this->revisarSesion();
 		$id=$this->input->post('id');
 		$ids=$this->input->post('ids');
-		$this->load->view('header');
-		$this->load->view('barra');	
 		$this->modelo->actualizaAnalisis($id,$ids);
-		$datos=$this->modelo->mostrarAnalisis($id);
-		$this->load->view('Analisis',$datos);
-		$this->load->view('footer');
+		redirect("Welcome/Analisis/".$id);
 	}
+
+	public function revisarSesion()
+	{
+		if (!$this->session->userdata('login'))
+            redirect('Welcome','refresh');
+	}
+
+	    public function cerrarsesion()
+    {
+        $datasession=array('login'=>'','logueado'=>'');
+        $this->session->unset_userdata($datasession);
+        $this->session->sess_destroy();
+        redirect('Welcome','refresh');
+    }
+
+    public function backButton()
+    {
+    	$this->session->set_userdata('urlAntigua',$this->session->userdata('urlActual'));
+		$this->session->set_userdata('urlActual',uri_string()); 
+    }
+
 }

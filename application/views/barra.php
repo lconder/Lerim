@@ -16,7 +16,7 @@
 
         <ul class="nav navbar-nav navbar-right">
             <li><a href="javascript:void(0)">Página</a></li>
-            <li><a href="javascript:void(0)"></a></li>
+            <li><a href="<?=base_url();?>index.php/Welcome/cerrarsesion">Cerrar Sesión</a></li>
            
         </ul>
     </div>

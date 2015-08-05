@@ -76,7 +76,7 @@ foreach($analisis->result() as $row)
 <input id="id" name="id" type="hidden" value=<?php echo $id;?> class="form-control" required="">
 <div class="form-group">
             <div class="col-lg-offset-2">
-            	<a href="<?php echo base_url() ?>index.php?/Welcome/muestras" class="btn btn-default" role="button">Regresar</a>
+            	<a href="<?php echo base_url() ?>index.php?/<?php echo $this->session->userdata('urlAntigua');?>" class="btn btn-default" role="button">Regresar</a>
                 <button type="submit" class="btn btn-primary">Aceptar</button>
             </div>
         </div>

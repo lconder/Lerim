@@ -147,7 +147,7 @@ class modelo extends CI_Model
 
 	public function mostrarAnalisis($id)
 	{
-		$query = $this->db->query("SELECT nombre,id_tipo_analisis,tipo, muestra, descripcion,resultado,medida FROM analisis,tipos_analisis WHERE tipo = id_tipo_analisis AND muestra = $id");
+		$query = $this->db->query("SELECT nombre,id_tipo_analisis,tipo, muestra, descripcion,resultado,medida, referencia FROM analisis,tipos_analisis WHERE tipo = id_tipo_analisis AND muestra = $id");
 		$dataArray['analisis']=$query;
 		$dataArray['id']=$id;
 	   return $dataArray;
@@ -158,7 +158,8 @@ class modelo extends CI_Model
 		foreach($ids as $selected){
 
 			$analisis=array(
-				'resultado' => $this->input->post($selected)
+				'resultado' => $this->input->post("resultado_".$selected),
+				'referencia' => $this->input->post("ref_".$selected)
 			);
 			$this->db->where('muestra',$id);
 			$this->db->where('tipo',$selected);

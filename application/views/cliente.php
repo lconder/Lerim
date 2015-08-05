@@ -16,10 +16,10 @@
      	 <div align="right" class="col-md-6">
      	 	<div class="row">
      	 		<div class="col-md-6">
-       				<h1><a href="<?php echo base_url();?>index.php/welcome/editarCliente/<?php echo $row->id_cliente?>">&nbsp;<img src="<?php echo base_url();?>assets/img/edit.png" width="80" alt="140"></a></h1>
+       				<h1><a href="<?php echo base_url();?>index.php/welcome/editarCliente/<?php echo $row->id_cliente?>" title="Editar este cliente">&nbsp;<img src="<?php echo base_url();?>assets/img/edit.png" width="80" alt="140"></a></h1>
       			</div>
       			<div class="col-md-6">
-       				<h1><a href="<?php echo base_url();?>index.php/welcome/nuevaMuestra/<?php echo $row->id_cliente?>">&nbsp;<img src="<?php echo base_url();?>assets/img/add.png" width="80" alt="140"></a></h1>
+       				<h1><a href="<?php echo base_url();?>index.php/welcome/nuevaMuestra/<?php echo $row->id_cliente?>" title="Agregar nueva muestra">&nbsp;<img src="<?php echo base_url();?>assets/img/add.png" width="80" alt="140"></a></h1>
       			</div>
      	 		
      	 	</div>
