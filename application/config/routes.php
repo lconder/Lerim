@@ -25,10 +25,10 @@
 |
 | There area two reserved routes:
 |
-|	$route['default_controller'] = 'welcome';
+|	$route['default_controller'] = 'Welcome';
 |
 | This route indicates which controller class should be loaded if the
-| URI contains no data. In the above example, the "welcome" class
+| URI contains no data. In the above example, the "Welcome" class
 | would be loaded.
 |
 |	$route['404_override'] = 'errors/page_missing';
@@ -38,7 +38,7 @@
 |
 */
 
-$route['default_controller'] = "welcome";
+$route['default_controller'] = "Welcome";
 $route['404_override'] = '';
 
 

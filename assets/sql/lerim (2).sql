@@ -1,6 +1,4 @@
-DROP DATABASE IF EXISTS lerim;
 
-CREATE DATABASE lerim;
 
 USE lerim;
 
@@ -12,7 +10,8 @@ CREATE TABLE usuarios
 	`nivel` INT NOT NULL,
 	PRIMARY KEY (`id_usuario`),
 	UNIQUE INDEX `usuario_UNIQUE` (`usuario` ASC)
-);
+)
+ENGINE=InnoDB;
 
 CREATE TABLE clientes
 (
@@ -25,7 +24,8 @@ CREATE TABLE clientes
 	`RFC` VARCHAR(12) NOT NULL,
 	PRIMARY KEY (`id_cliente`),
 	UNIQUE INDEX `rfc_UNIQUE` (`RFC` ASC)
-);
+)
+ENGINE=InnoDB;
 
 CREATE TABLE tipos_muestras
 (
@@ -33,12 +33,13 @@ CREATE TABLE tipos_muestras
 	`nombre` VARCHAR(50) NOT NULL,
 	`nativo` INT NOT NULL,
 	PRIMARY KEY (`id_tipo_muestra`)
-);
+)
+ENGINE=InnoDB;
 
 CREATE TABLE tipos_analisis
 (
 	`id_tipo_analisis` INT NOT NULL AUTO_INCREMENT,
-	`nombre` VARCHAR(1) NOT NULL,
+	`nombre` VARCHAR(50) NOT NULL,
 	`tipos_muestras` INT NOT NULL,
 	`descripcion` VARCHAR(200) NULL,
 	`medida` VARCHAR(50) NOT NULL,
@@ -49,7 +50,8 @@ CREATE TABLE tipos_analisis
     	REFERENCES `tipos_muestras` (`id_tipo_muestra` )
     	ON DELETE NO ACTION
     	ON UPDATE CASCADE
-);
+)
+ENGINE=InnoDB;
 
 CREATE TABLE muestras
 (
@@ -70,7 +72,8 @@ CREATE TABLE muestras
     	REFERENCES `tipos_muestras` (`id_tipo_muestra` )
     	ON DELETE NO ACTION
     	ON UPDATE CASCADE
-);
+)
+ENGINE=InnoDB;
 
 CREATE TABLE analisis
 (
@@ -89,8 +92,8 @@ CREATE TABLE analisis
     	REFERENCES `muestras` (`id_muestra` )
     	ON DELETE NO ACTION
     	ON UPDATE CASCADE
-
-);
+)
+ENGINE=InnoDB;
 
 
 INSERT INTO `tipos_muestras` VALUES(NULL, "Agua",1);
@@ -117,11 +120,7 @@ INSERT INTO `tipos_analisis` VALUES(NULL,"c",3,"Recuento de Staphylococcus aureu
 
 INSERT INTO `tipos_analisis` VALUES(NULL,"a",4,"Recuento de bacterias mesofílicas aerobias en placas con agar cuenta estándar, incubadas a 35ºC/48 h.","NMP/100 mL",1);
 INSERT INTO `tipos_analisis` VALUES(NULL,"b",4,"Recuento de bacterias coliformes totales en placas con agar rojo violeta bilis, incubadas a 35ºC/24 h.","NMP/100 mL",1);
-INSERT INTO `tipos_analisis` VALUES(NULL,"c",4,"Recuento de Staphylococcus aureus en placas con agar Baird – Parker, incubadas a 35°C/48 h y realizando pruebas de coagulasa y termonucleasa.","NMP/100 mL",1);
+INSERT INTO `tipos_analisis` VALUES(NULL,"c",4,"Recuento de <em>Staphylococcus aureus</em> en placas con agar Baird – Parker, incubadas a 35°C/48 h y realizando pruebas de coagulasa y termonucleasa.","NMP/100 mL",1);
 
-INSERT INTO `usuarios` VALUES(NULL,"admin",SHA("admin"),1);
-INSERT INTO `clientes` VALUES(NULL,"Empresa","Luis Polanco", "2221773973","", "Su casa", "POBL901216UN6");
-INSERT INTO `clientes` VALUES(NULL,"Empresa1","Luis Conde", "2224756890", "","Tambien en su casa", "CORL941216UN6");
-INSERT INTO `muestras` VALUES(NULL,"agua de sandia", 2,CURTIME(),CURDATE(), 1);
-INSERT INTO `muestras` VALUES(NULL,"agua de contenedor", 1,CURTIME(),CURDATE(), 1);
+INSERT INTO `usuarios` VALUES(NULL,"lconde",SHA("polanco"),1);
 

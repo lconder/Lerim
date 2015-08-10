@@ -16,10 +16,10 @@
      	 <div align="right" class="col-md-6">
      	 	<div class="row">
      	 		<div class="col-md-6">
-       				<h1><a href="<?php echo base_url();?>index.php/welcome/editarCliente/<?php echo $row->id_cliente?>" title="Editar este cliente">&nbsp;<img src="<?php echo base_url();?>assets/img/edit.png" width="80" alt="140"></a></h1>
+       				<h1><a href="<?php echo base_url();?>index.php/Welcome/editarCliente/<?php echo $row->id_cliente?>" title="Editar este cliente">&nbsp;<img src="<?php echo base_url();?>assets/img/edit.png" width="80" alt="140"></a></h1>
       			</div>
       			<div class="col-md-6">
-       				<h1><a href="<?php echo base_url();?>index.php/welcome/nuevaMuestra/<?php echo $row->id_cliente?>" title="Agregar nueva muestra">&nbsp;<img src="<?php echo base_url();?>assets/img/add.png" width="80" alt="140"></a></h1>
+       				<h1><a href="<?php echo base_url();?>index.php/Welcome/nuevaMuestra/<?php echo $row->id_cliente?>" title="Agregar nueva muestra">&nbsp;<img src="<?php echo base_url();?>assets/img/add.png" width="80" alt="140"></a></h1>
       			</div>
      	 		
      	 	</div>
@@ -33,20 +33,26 @@
 	            <th>Tipo</th>
 	            <th>Fecha</th>
 	            <th>Hora</th>
-	            <th>Ánalisis</th>
+	            <th>Opciones</th>
 	        </tr>
 	    </thead>
 	    <tbody>
 			<?php
-			foreach($muestras->result() as $row) {?>
+			foreach($muestras->result() as $row) 
+			{?>
 			<tr>
 				 <td>
-	                <a href="<?php echo base_url();?>index.php?/welcome/analisis/<?php echo $row->id_muestra?>">&nbsp;<?php echo $row->nombre;?></a>
+	                <a href="<?php echo base_url();?>index.php?/Welcome/analisis/<?php echo $row->id_muestra?>">&nbsp;<?php echo $row->nombre;?></a>
 	            </td>
 				<td><?php echo $row->tipo; ?></td>
 				<td><?php echo $row->fecha; ?></td>
 				<td><?php echo $row->hora; ?></td>
-				<td><a href="<?php echo base_url();?>index.php/welcome/posiblesAnalisis/<?php echo $row->id_muestra?>">&nbsp;<i class="mdi-content-add-circle-outline"></i></a></td>
+				<td>
+					<a href="<?php echo base_url();?>index.php/Welcome/posiblesAnalisis/<?php echo $row->id_muestra?>"  title="Agregar Analisis">&nbsp;<i class="mdi-content-add-circle-outline"></i></a>
+					<a href="">&nbsp;<i class="mdi-communication-email" title="Enviar e-mail"></i></a>
+					<a href="">&nbsp;<i class="mdi-action-description" title="Generar PDF"></i></a>
+
+				</td>
 			</tr>
 			<?php }?>
 		</tbody>

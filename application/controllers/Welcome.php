@@ -20,6 +20,8 @@ class Welcome extends CI_Controller {
 
 	public function login()
 	{
+		if ($this->session->userdata('login'))
+            redirect('Welcome/clientes');
 		$datasession = array(
 				'login' => $this->input->post('User'),
              	'logueado' => true,
@@ -96,8 +98,9 @@ class Welcome extends CI_Controller {
 	public function agregaCliente()
 	{
 		$this->revisarSesion();
-		$this->modelo->agregaCliente();
-		redirect("Welcome/clientes");
+		if($this->modelo->agregaCliente())
+			redirect("Welcome/clientes");
+		redirect("Welcome/nuevoCliente");
 	}
 
 	public function BIO()
@@ -204,7 +207,7 @@ class Welcome extends CI_Controller {
 		$id=$this->input->post('id');
 		$ids=$this->input->post('ids');
 		$this->modelo->actualizaAnalisis($id,$ids);
-		redirect("Welcome/Analisis/".$id);
+		redirect("Welcome/muestras/");
 	}
 
 	public function revisarSesion()

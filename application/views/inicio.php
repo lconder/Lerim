@@ -29,22 +29,25 @@
         </tr>
       </tfoot>
       <tbody>
-        <?php foreach($clientes->result() as $row) { ?>
-            <tr>
-              <td>
-                  <a href="<?php echo base_url();?>index.php/welcome/bio/<?php echo $row->id_cliente?>">&nbsp;<?php echo $row->nombre;?></a>
-              </td>
-              <td><?php echo $row->representante;?></td>
-              <td><?php echo $row->telefono;?></td>
-              <td><?php echo $row->email;?></td>
-              <td><?php echo $row->direccion;?></td>
-              <td><?php echo $row->RFC;?></td>
-              <td>
-                <a href="<?php echo base_url();?>index.php/welcome/nuevaMuestra/<?php echo $row->id_cliente?>">&nbsp;<i class="mdi-content-add-circle-outline"></i></a>
-                <a href="<?php echo base_url();?>index.php/welcome/editarCliente/<?php echo $row->id_cliente?>">&nbsp;<i class="mdi-content-create"></i></a>
-              </td>
-            </tr>
-            <?php }?>
+        <?php
+          if($clientes)
+          {
+            foreach($clientes->result() as $row) { ?>
+              <tr>
+                <td>
+                    <a href="<?php echo base_url();?>index.php/Welcome/bio/<?php echo $row->id_cliente?>">&nbsp;<?php echo $row->nombre;?></a>
+                </td>
+                <td><?php echo $row->representante;?></td>
+                <td><?php echo $row->telefono;?></td>
+                <td><?php echo $row->email;?></td>
+                <td><?php echo $row->direccion;?></td>
+                <td><?php echo $row->RFC;?></td>
+                <td>
+                  <a href="<?php echo base_url();?>index.php/Welcome/nuevaMuestra/<?php echo $row->id_cliente?>">&nbsp;<i class="mdi-content-add-circle-outline"></i></a>
+                  <a href="<?php echo base_url();?>index.php/Welcome/editarCliente/<?php echo $row->id_cliente?>">&nbsp;<i class="mdi-content-create"></i></a>
+                </td>
+              </tr>
+            <?php }}?>
           </tbody>
         </table>
 </div>

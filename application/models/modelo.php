@@ -92,7 +92,9 @@ class modelo extends CI_Model
 	{
 		$this->db->where('id_cliente',$id);
 		$this->db->update('clientes',$datos);
-		return true;
+		if ($this->db->_error_message())
+			return true;
+		return false;
 	}
 
 	public function cargaAnalisis($id){
@@ -135,8 +137,8 @@ class modelo extends CI_Model
 
 		$this->db->insert('tipos_analisis', $analisis);
 
-		$query = $this->db->query("SELECT id_tipo_analisis FROM tipos_analisis WHERE tipos_muestras=$tipos_muestras AND nombre='$nombre' AND descripcion='$descripcion' AND nativo=0 LIMIT 1");
-		$j;
+		$query = $this->db->query("SELECT id_tipo_analisis FROM tipos_analisis WHERE tipos_muestras=$tipos_muestras AND nombre='$nombre' AND descripcion='$descripcion' AND nativo=0  ORDER BY id_tipo_analisis DESC LIMIT 1");
+		$j=0;
 		foreach($query->result() as $row)
 	  	{
 	  		$j=$row->id_tipo_analisis;
@@ -155,6 +157,8 @@ class modelo extends CI_Model
 
 	public function actualizaAnalisis($id,$ids)
 	{
+		if(empty($ids))
+			return;
 		foreach($ids as $selected){
 
 			$analisis=array(
