@@ -188,4 +188,24 @@ class modelo extends CI_Model
 	  	}
 		return $query;
 	}
+
+	public function obtenerEmail($id)
+	{
+		$query = $this->db->query("SELECT email FROM clientes, muestras WHERE id_cliente = cliente and id_muestra = $id");
+		foreach($query->result() as $row)
+	  	{
+	  		$query=$row->email;
+	  	}
+		return $query;
+	}
+
+	public function nombreMuestra($id)
+	{
+		$query = $this->db->query("SELECT nombre FROM muestras WHERE id_muestra = $id");
+		foreach($query->result() as $row)
+	  	{
+	  		$query=$row->nombre;
+	  	}
+		return $query;	
+	}
 }

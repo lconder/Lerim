@@ -5,7 +5,7 @@ class Welcome extends CI_Controller {
 	function __construct(){
 		parent::__construct();
 		$this->load->model('modelo');
-		$this->load->helper('url');
+		$this->load->helper(array('url','email_helper'));
 		$this->load->library('session');
 	}
 
@@ -20,8 +20,6 @@ class Welcome extends CI_Controller {
 
 	public function login()
 	{
-		if ($this->session->userdata('login'))
-            redirect('Welcome/clientes');
 		$datasession = array(
 				'login' => $this->input->post('User'),
              	'logueado' => true,
@@ -44,7 +42,6 @@ class Welcome extends CI_Controller {
 
 	public function clientes()
 	{
-		$this->revisarSesion();
 		$this->backButton();
 		$datos['clientes']=$this->modelo->clientes();
 		$this->load->view('header');
@@ -55,7 +52,6 @@ class Welcome extends CI_Controller {
 
 	public function muestras()
 	{
-		$this->revisarSesion();
 		$this->backButton();
 		$datos['muestras']=$this->modelo->muestras();
 		$this->load->view('header');
@@ -66,7 +62,6 @@ class Welcome extends CI_Controller {
 
 	public function nuevoCliente()
 	{
-		$this->revisarSesion();
 		$this->backButton();
 		$this->load->view('header');
 		$this->load->view('barra');
@@ -76,7 +71,6 @@ class Welcome extends CI_Controller {
 
 	public function agregaMuestra()
 	{
-		$this->revisarSesion();
 		$tipo=$this->input->post('tipo');
 		if($tipo == 0)
 		{
@@ -97,7 +91,6 @@ class Welcome extends CI_Controller {
 
 	public function agregaCliente()
 	{
-		$this->revisarSesion();
 		if($this->modelo->agregaCliente())
 			redirect("Welcome/clientes");
 		redirect("Welcome/nuevoCliente");
@@ -105,7 +98,6 @@ class Welcome extends CI_Controller {
 
 	public function BIO()
 	{
-		$this->revisarSesion();
 		$this->backButton();
 		$id=$this->uri->segment(3);
 		$bio=$this->modelo->muestraBio($id);
@@ -115,9 +107,33 @@ class Welcome extends CI_Controller {
 		$this->load->view('footer');
 	}
 
+	public function enviarEmail()
+	{
+		$id = $this->uri->segment(3);
+		$config = Array(
+	    	'protocol' => 'smtp',
+		    'smtp_host' => 'relay-hosting.secureserver.net',
+		    'smtp_port' => 25,
+		    'smtp_user' => 'labftejeda', 
+		    'smtp_pass' => 'Ad1smale3', 
+		    'mailtype' => 'html',
+		    'charset' => 'iso-8859-1',
+		    'wordwrap' => TRUE);
+
+	    $CI =& get_instance();        
+	    $CI->load->library('email',$config);
+	    $CI->email->set_newline("\r\n");
+	    $CI->email->from('contacto@lerim.com.mx', 'Lerim');
+	    $CI->email->to($this->modelo->obtenerEmail($id));
+	    $CI->email->subject("Resultados de ".$this->modelo->nombreMuestra($id));
+	    $datos = $this->modelo->mostrarAnalisis($id);
+	    $CI->email->message(formatearMensaje($datos['analisis']));
+	    $CI->email->send();
+	    redirect("Welcome/muestras");
+	}
+
 	public function nuevaMuestra()
 	{
-		$this->revisarSesion();
 		$this->backButton();
 		$id=$this->uri->segment(3);
 		$datos=$this->modelo->nuevaMuestra($id);
@@ -129,7 +145,6 @@ class Welcome extends CI_Controller {
 
 	public function editarCliente()
 	{
-		$this->revisarSesion();
 		$this->backButton();
 		$id=$this->uri->segment(3);
 		$datos['cliente']=$this->modelo->buscaCliente($id);
@@ -141,7 +156,6 @@ class Welcome extends CI_Controller {
 
 	public function actualizaCliente()
 	{
-		$this->revisarSesion();
 		$datos = array
 		(
 			'nombre' => $this->input->post('nombre'),
@@ -158,7 +172,6 @@ class Welcome extends CI_Controller {
 
 	public function Analisis()
 	{
-		$this->revisarSesion();
 		$this->backButton();
 		$id=$this->uri->segment(3);
 		$datos=$this->modelo->mostrarAnalisis($id);
@@ -170,7 +183,6 @@ class Welcome extends CI_Controller {
 
 	public function guardarAnalisis()
 	{	
-		$this->revisarSesion();
 		$ids=$this->input->post('ids');
 		$id=$this->input->post('id');
 		for($i=0;$i<count($ids);$i++)
@@ -191,7 +203,6 @@ class Welcome extends CI_Controller {
 
 	public function posiblesAnalisis()
 	{
-		$this->revisarSesion();
 		$this->backButton();
 		$id=$this->uri->segment(3);
 		$datos=$this->modelo->cargaAnalisis($id);
@@ -203,25 +214,19 @@ class Welcome extends CI_Controller {
 	
 	public function actualizarAnalisis()
 	{
-		$this->revisarSesion();
+		
 		$id=$this->input->post('id');
 		$ids=$this->input->post('ids');
 		$this->modelo->actualizaAnalisis($id,$ids);
-		redirect("Welcome/muestras/");
+		redirect("Welcome/muestras");
 	}
 
-	public function revisarSesion()
-	{
-		if (!$this->session->userdata('login'))
-            redirect('Welcome','refresh');
-	}
-
-	    public function cerrarsesion()
+	public function cerrarsesion()
     {
         $datasession=array('login'=>'','logueado'=>'');
         $this->session->unset_userdata($datasession);
         $this->session->sess_destroy();
-        redirect('Welcome','refresh');
+        redirect('Welcome/login','refresh');
     }
 
     public function backButton()

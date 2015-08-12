@@ -49,7 +49,7 @@
 				<td><?php echo $row->hora; ?></td>
 				<td>
 					<a href="<?php echo base_url();?>index.php/Welcome/posiblesAnalisis/<?php echo $row->id_muestra?>"  title="Agregar Analisis">&nbsp;<i class="mdi-content-add-circle-outline"></i></a>
-					<a href="">&nbsp;<i class="mdi-communication-email" title="Enviar e-mail"></i></a>
+					<a href="<?php echo base_url();?>index.php/Welcome/enviarEmail/<?php echo $row->id_muestra?>" >&nbsp;<i class="mdi-communication-email" title="Enviar e-mail"></i></a>
 					<a href="">&nbsp;<i class="mdi-action-description" title="Generar PDF"></i></a>
 
 				</td>

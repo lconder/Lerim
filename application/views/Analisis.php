@@ -1,6 +1,6 @@
 <form class="form-horizontal" action="<?php echo base_url() ?>index.php?/Welcome/actualizarAnalisis" method="post">
 <?php
-echo "<h1><strong>Ingrese los valores de los ánalisis realizados:</strong></h1><br>";
+echo "<h1><strong>Ingrese los valores de los análisis realizados:</strong></h1><br>";
 foreach($analisis->result() as $row)
 {
 ?>
