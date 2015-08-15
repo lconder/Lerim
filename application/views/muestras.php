@@ -7,7 +7,7 @@
         <th >Fecha</th>
         <th>Hora</th>
         <th>Cliente</th>
-        <th>Análisis</th>
+        <th>Opciones</th>
       </tr>
       </thead>
       <tbody>
@@ -26,7 +26,7 @@
               <td>
                 <a href="<?php echo base_url();?>index.php/Welcome/posiblesAnalisis/<?php echo $row->id_muestra?>"  title="Agregar Analisis">&nbsp;<i class="mdi-content-add-circle-outline"></i></a>
                 <a href="<?php echo base_url();?>index.php/Welcome/enviarEmail/<?php echo $row->id_muestra?>" >&nbsp;<i class="mdi-communication-email" title="Enviar e-mail"></i></a>
-                <a href="">&nbsp;<i class="mdi-action-description" title="Generar PDF"></i></a>
+                <a href="<?php echo base_url();?>index.php/Welcome/mostrarPDF/<?php echo $row->id_muestra?>" target="_blank">&nbsp;<i class="mdi-action-description" title="Generar PDF"></i></a>
               </td>
             </tr>
           <?php }}?>

@@ -1,16 +1,16 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
  
-//si no existe la función invierte_date_time la creamos
 if(!function_exists('formatearMensaje'))
 {
-    //formateamos la fecha y la hora, función de cesarcancino.com
 	function formatearMensaje($datos)
 	{
+		$trans = get_html_translation_table(HTML_ENTITIES, ENT_NOQUOTES);
+		unset($trans['<'],$trans['>']);
 		$mensaje = "<html><body> ";
  		$mensaje .= "Análisis Realizados: <br>";
  		foreach ($datos->result() as $row) 
  		{
- 			$mensaje .=  htmlspecialchars($row->descripcion)."<br><p align='center'><strong>". htmlspecialchars($row->resultado)."&nbsp;". htmlspecialchars($row->medida);
+ 			$mensaje .=  strtr($row->descripcion,$trans)."<br><p align='center'><strong>". htmlspecialchars($row->resultado)."&nbsp;". htmlspecialchars($row->medida);
  			$mensaje .= "<br>". htmlspecialchars($row->referencia)."</strong></p>";
  		}
  		$mensaje .= " </body></html>";

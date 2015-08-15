@@ -5,8 +5,8 @@ class Welcome extends CI_Controller {
 	function __construct(){
 		parent::__construct();
 		$this->load->model('modelo');
-		$this->load->helper(array('url','email_helper'));
-		$this->load->library('session');
+		$this->load->helper(array('url','email_helper', 'pdf_helper'));
+		$this->load->library(array('session','Pdf'));
 	}
 
 
@@ -107,30 +107,7 @@ class Welcome extends CI_Controller {
 		$this->load->view('footer');
 	}
 
-	public function enviarEmail()
-	{
-		$id = $this->uri->segment(3);
-		$config = Array(
-	    	'protocol' => 'smtp',
-		    'smtp_host' => 'relay-hosting.secureserver.net',
-		    'smtp_port' => 25,
-		    'smtp_user' => 'labftejeda', 
-		    'smtp_pass' => 'Ad1smale3', 
-		    'mailtype' => 'html',
-		    'charset' => 'utf-8',
-		    'wordwrap' => TRUE);
-
-	    $CI =& get_instance();        
-	    $CI->load->library('email',$config);
-	    $CI->email->set_newline("\r\n");
-	    $CI->email->from('contacto@lerim.com.mx', 'Lerim');
-	    $CI->email->to($this->modelo->obtenerEmail($id));
-	    $CI->email->subject("Resultados de ".$this->modelo->nombreMuestra($id));
-	    $datos = $this->modelo->mostrarAnalisis($id);
-	    $CI->email->message(formatearMensaje($datos['analisis']));
-	    $CI->email->send();
-	    redirect("Welcome/muestras");
-	}
+	
 
 	public function nuevaMuestra()
 	{
@@ -235,4 +212,45 @@ class Welcome extends CI_Controller {
 		$this->session->set_userdata('urlActual',uri_string()); 
     }
 
+    public function enviarEmail()
+	{
+		$id = $this->uri->segment(3);
+		$config = Array(
+	    	'protocol' => 'smtp',
+		    'smtp_host' => 'relay-hosting.secureserver.net',
+		    'smtp_port' => 25,
+		    'smtp_user' => 'labftejeda', 
+		    'smtp_pass' => 'Ad1smale3', 
+		    'mailtype' => 'html',
+		    'charset' => 'utf-8',
+		    'wordwrap' => TRUE);
+
+	    $CI =& get_instance();        
+	    $CI->load->library('email',$config);
+	    $CI->email->set_newline("\r\n");
+	    $CI->email->from('contacto@lerim.com.mx', 'Lerim');
+	    $CI->email->to($this->modelo->obtenerEmail($id));
+	    $CI->email->subject("Resultados de ".$this->modelo->nombreMuestra($id));
+	    $datos = $this->modelo->mostrarAnalisis($id);
+	    $CI->email->message(formatearMensaje($datos['analisis']));
+	    $CI->email->send();
+	    redirect("Welcome/exito");
+	}
+
+    public function mostrarPDF()
+    {
+    	$id = $this->uri->segment(3);
+    	$nombre = $this->modelo->nombreMuestra($id);
+    	$datos = $this->modelo->mostrarAnalisis($id);
+    	crearPDF($nombre, $datos['analisis']);   
+    }
+
+    public function exito()
+    {
+    	$this->load->view('header');
+		$this->load->view('barra');
+		$this->load->view('exito');
+		$this->load->view('footer');	
+    }
+        
 }
