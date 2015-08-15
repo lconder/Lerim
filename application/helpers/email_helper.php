@@ -10,10 +10,10 @@ if(!function_exists('formatearMensaje'))
  		$mensaje .= "Análisis Realizados: <br>";
  		foreach ($datos->result() as $row) 
  		{
- 			$mensaje .= $row->descripcion."<br><p align='center'><strong>".$row->resultado."&nbsp;".$row->medida;
- 			$mensaje .= "<br>".$row->referencia."</strong></p>";
+ 			$mensaje .=  htmlspecialchars($row->descripcion)."<br><p align='center'><strong>". htmlspecialchars($row->resultado)."&nbsp;". htmlspecialchars($row->medida);
+ 			$mensaje .= "<br>". htmlspecialchars($row->referencia)."</strong></p>";
  		}
  		$mensaje .= " </body></html>";
- 		return utf8_encode($mensaje);
+ 		return $mensaje;
 	}
 }

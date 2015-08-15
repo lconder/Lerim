@@ -5,12 +5,13 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="<?php echo base_url();?>index.php/Welcome/clientes">Lerim</a>
+        <a class="navbar-brand" href="#">Lerim</a>
     </div>
     <div class="navbar-collapse collapse navbar-responsive-collapse">
         <ul class="nav navbar-nav">
-            <li class="active"><a href="<?php echo base_url();?>index.php/Welcome/nuevoCliente">Agregar Cliente</a></li>
+            <li><a href="<?php echo base_url();?>index.php/Welcome/Clientes">Clientes</a></li>
             <li><a href="<?php echo base_url();?>index.php/Welcome/muestras">Muestras</a></li>
+            <li><a href="<?php echo base_url();?>index.php/Welcome/nuevoCliente">Agregar Cliente</a></li>
 
         </ul>
 

@@ -117,7 +117,7 @@ class Welcome extends CI_Controller {
 		    'smtp_user' => 'labftejeda', 
 		    'smtp_pass' => 'Ad1smale3', 
 		    'mailtype' => 'html',
-		    'charset' => 'iso-8859-1',
+		    'charset' => 'utf-8',
 		    'wordwrap' => TRUE);
 
 	    $CI =& get_instance();        
