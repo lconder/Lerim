@@ -7,11 +7,11 @@ echo "<h1><strong>Ingrese los valores de los análisis realizados:</strong></h1>
 	<div class="form-group">
 		<label class="col-md-2 control-label" for="fecha_analisis">Fecha An&aacute;lisis: </label>
 			<div class="col-sm-3">
-		    	<input id="fecha_analisis" name="fecha_analisis" type="date" class="form-control"  value=<?php echo  date("Y-m-d")?> max=<?php echo  date("Y-m-d")?> required="">  
+		    	<input id="fecha_analisis" name="fecha_analisis" type="date" class="form-control"  value=<?php echo  $fecha_analisis?> max=<?php echo  date("Y-m-d")?> required="">  
 		  	</div>
 		  	<label class="col-md-2 control-label" for="fecha_resultados">Fecha Resultados: </label>
 			<div class="col-sm-3">
-		    	<input id="fecha_resultados" name="fecha_resultados" type="date" class="form-control" value=<?php echo  date("Y-m-d")?> max=<?php echo  date("Y-m-d")?> required="">  
+		    	<input id="fecha_resultados" name="fecha_resultados" type="date" class="form-control" value=<?php echo  $fecha_resultado?> max=<?php echo  date("Y-m-d")?> required="">  
 		  	</div>
 	</div>
 <?php

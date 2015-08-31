@@ -41,13 +41,13 @@
        // El pie del pdf
        public function Footer()
        {
-           $this->SetY(-25);
-           $this->SetFont('Arial','I',8);
-           $this->SetFont('Arial', '', 12);
-          $this->MultiCell(0,6,"\n",0,'C');
-          $this->MultiCell(0,6,"ATENTAMENTE",0,'C');
+           
+           //$this->SetFont('Arial','I',8);
+           //$this->SetFont('Arial', '', 12);
+          //$this->MultiCell(0,6,"\n",0,'C');
+          //$this->MultiCell(0,6,"ATENTAMENTE",0,'C');
 
-           $this->SetTextColor(26,35,126);
+           //$this->SetTextColor(26,35,126);
            //$this->MultiCell(0,6,'R.F.C TETF 590906-8D4  CED. PROF. 1037451  TEL. 231-92-52 CELS. 22-23-98-11-94, 22-23-98-11-98',0,'C');
            //$this->Cell(0,10,iconv('UTF-8', 'windows-1252',"Página").$this->PageNo().'/{nb}',0,0,'C');
            
