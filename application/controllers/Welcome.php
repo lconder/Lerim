@@ -233,7 +233,7 @@ class Welcome extends CI_Controller {
 	    $CI->email->set_newline("\r\n");
 	    $CI->email->from('contacto@lerim.com.mx', 'Lerim');
 	    $CI->email->to($this->modelo->obtenerEmail($id));
-	    $CI->email->subject("Resultados de ".$this->modelo->nombreMuestra($id));
+	    $CI->email->subject("Resultados de ".$this->modelo->nombreMuestra($id)['nombre_muestra']);
 	    $datos = $this->modelo->mostrarAnalisis($id);
 	    $CI->email->message(formatearMensaje($datos['analisis']));
 	    $CI->email->send();
