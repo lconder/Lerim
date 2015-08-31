@@ -22,12 +22,14 @@ class Welcome extends CI_Controller {
 	{
 		$datasession = array(
 				'login' => $this->input->post('User'),
+				'usuario' => 0, 
              	'logueado' => true,
              	'urlAntigua' => '',
              	'urlActual' => uri_string()
 			);
-		if($this->modelo->login())
+		if( $id = $this->modelo->login())
 		{
+			$datasession['usuario'] = $id;
 			$this->session->set_userdata($datasession);
 			redirect("Welcome/clientes");
 		}
@@ -81,9 +83,12 @@ class Welcome extends CI_Controller {
 		$muestra=array(
 			'nombre'=>$this->input->post('nombre'),
 			'fecha'=>$this->input->post('fecha'),
+			'fecha_analisis'=>$this->input->post('fecha'),
+			'fecha_resultado'=>$this->input->post('fecha'),
 			'hora'=>$this->input->post('hora'),
 			'tipo'=>$tipo,
-			'cliente'=>$this->input->post('cliente')
+			'cliente'=>$this->input->post('cliente'),
+			'usuario'=>$this->session->userdata('usuario');
 		);
 		$this->modelo->agregaMuestra($muestra);
 		redirect("Welcome/bio/".$this->input->post('cliente'));
@@ -106,8 +111,6 @@ class Welcome extends CI_Controller {
 		$this->load->view('cliente',$bio);
 		$this->load->view('footer');
 	}
-
-	
 
 	public function nuevaMuestra()
 	{
@@ -242,7 +245,7 @@ class Welcome extends CI_Controller {
     	$id = $this->uri->segment(3);
     	$nombre = $this->modelo->nombreMuestra($id);
     	$datos = $this->modelo->mostrarAnalisis($id);
-    	crearPDF($nombre, $datos['analisis']);   
+    	crearPDF($nombre, $datos['analisis']);
     }
 
     public function exito()

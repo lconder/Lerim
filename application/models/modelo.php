@@ -11,10 +11,14 @@ class modelo extends CI_Model
 	public function login(){
 		$usuario=$this->input->post('User');
 		$password=$this->input->post('Password');
-
-		$query=$this->db->query("SELECT * FROM usuarios WHERE usuario='$usuario' AND password=SHA('$password')");
+		$query=$this->db->query("SELECT id_usuario FROM usuarios WHERE usuario='$usuario' AND password=SHA('$password')");
 		if ($query->num_rows() == 0) 
-		  $query=FALSE; 
+		  $query=FALSE;
+		else
+		{
+			$id = $query->row();
+			$query = $id->id_usuario;
+		} 
 	   return $query;
 	}
 
@@ -30,8 +34,8 @@ class modelo extends CI_Model
 	{
 
 		$query=$this->db->query("SELECT id_muestra,muestras.nombre, tipos_muestras.nombre as tipo, muestras.fecha, muestras.hora, clientes.nombre as cliente FROM muestras, tipos_muestras, clientes WHERE muestras.tipo = tipos_muestras.id_tipo_muestra and muestras.cliente=clientes.id_cliente ORDER BY muestras.fecha DESC");
-		if ($query->num_rows() == 0) 
-		  $query=FALSE; 
+		if ($query->num_rows() == 0)
+		  $query=FALSE;
 	   return $query;
 	}
 
@@ -112,7 +116,8 @@ class modelo extends CI_Model
 
 			$analisis=array(
 				'muestra'=>$id,
-				'tipo'=>$selected
+				'tipo'=>$selected,
+				'usuario'=>$this->session->userdata('usuario')
 			);
 			$this->db->insert('analisis', $analisis);
 		}
@@ -163,7 +168,8 @@ class modelo extends CI_Model
 
 			$analisis=array(
 				'resultado' => $this->input->post("resultado_".$selected),
-				'referencia' => $this->input->post("ref_".$selected)
+				'referencia' => $this->input->post("ref_".$selected),
+				'usuario' => $this->session->userdata('usuario')
 			);
 			$this->db->where('muestra',$id);
 			$this->db->where('tipo',$selected);
@@ -201,11 +207,7 @@ class modelo extends CI_Model
 
 	public function nombreMuestra($id)
 	{
-		$query = $this->db->query("SELECT nombre FROM muestras WHERE id_muestra = $id");
-		foreach($query->result() as $row)
-	  	{
-	  		$query=$row->nombre;
-	  	}
-		return $query;	
+		$query = $this->db->query("SELECT muestras.nombre as nombre_muestra, hora, fecha, fecha_analisis, fecha_resultado, representante, direccion, clientes.nombre as empresa FROM muestras,clientes WHERE id_muestra = $id AND cliente=id_cliente");
+		return $query->row_array();
 	}
 }
