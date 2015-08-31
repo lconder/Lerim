@@ -2,22 +2,23 @@
 <?php
 echo "<h1><strong>Ingrese los valores de los análisis realizados:</strong></h1><br>";
 ?>
-<div class="form-group">
-	<label class="col-md-1 control-label" for="fecha_analisis">Fecha An&aacute;lisis</label>
-		<div class="col-sm-3">
-	    	<input id="fecha_analisis" name="fecha_analisis" type="date" class="form-control"  value=<?php echo  date("Y-m-d")?> max=<?php echo  date("Y-m-d")?> required="">  
-	  	</div>
-	  	<label class="col-md-1 control-label" for="fecha_resultados">Fecha An&aacute;lisis</label>
-		<div class="col-sm-3">
-	    	<input id="fecha_resultados" name="fecha_resultados" type="date" class="form-control" value=<?php echo  date("Y-m-d")?> max=<?php echo  date("Y-m-d")?> required="">  
-	  	</div>
-</div>
+<div class="container">
+<div class="row">
+	<div class="form-group">
+		<label class="col-md-2 control-label" for="fecha_analisis">Fecha An&aacute;lisis: </label>
+			<div class="col-sm-3">
+		    	<input id="fecha_analisis" name="fecha_analisis" type="date" class="form-control"  value=<?php echo  date("Y-m-d")?> max=<?php echo  date("Y-m-d")?> required="">  
+		  	</div>
+		  	<label class="col-md-2 control-label" for="fecha_resultados">Fecha Resultados: </label>
+			<div class="col-sm-3">
+		    	<input id="fecha_resultados" name="fecha_resultados" type="date" class="form-control" value=<?php echo  date("Y-m-d")?> max=<?php echo  date("Y-m-d")?> required="">  
+		  	</div>
+	</div>
 <?php
 foreach($analisis->result() as $row)
 {
 ?>
-<div class="container">
-	<div class="row">
+
 
 		<div class="col-md-9">
 			<div class="panel panel-primary">
@@ -54,11 +55,12 @@ foreach($analisis->result() as $row)
 		    	</div>
 			</div>
 		</div>		   	
-	</div>
-</div>
+
 <?php
 }
 ?>
+</div>
+</div>
 <input id="id" name="id" type="hidden" value=<?php echo $id;?> class="form-control" required="">
 <div class="form-group">
             <div class="col-lg-offset-2">
