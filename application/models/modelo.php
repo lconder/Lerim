@@ -164,8 +164,8 @@ class modelo extends CI_Model
 	{
 		if(empty($ids))
 			return;
-		foreach($ids as $selected){
-
+		foreach($ids as $selected)
+		{
 			$analisis=array(
 				'resultado' => $this->input->post("resultado_".$selected),
 				'referencia' => $this->input->post("ref_".$selected),
