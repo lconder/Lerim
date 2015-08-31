@@ -169,7 +169,9 @@ class modelo extends CI_Model
 			$analisis=array(
 				'resultado' => $this->input->post("resultado_".$selected),
 				'referencia' => $this->input->post("ref_".$selected),
-				'usuario' => $this->session->userdata('usuario')
+				'usuario' => $this->session->userdata('usuario'),
+				'fecha_analisis' => $this->input->post("fecha_analisis"),
+				'fecha_resultado' => $this->input->post("fecha_resultado")
 			);
 			$this->db->where('muestra',$id);
 			$this->db->where('tipo',$selected);
@@ -209,5 +211,11 @@ class modelo extends CI_Model
 	{
 		$query = $this->db->query("SELECT muestras.nombre as nombre_muestra, hora, fecha, fecha_analisis, fecha_resultado, representante, direccion, clientes.nombre as empresa FROM muestras,clientes WHERE id_muestra = $id AND cliente=id_cliente");
 		return $query->row_array();
+	}
+
+	public function obtenerFechas($id)
+	{
+		$query = $this->db->query("SELECT fecha_resultado, fecha_analisis FROM muestras WHERE id_muestra = $id");
+		return $query->row_array();	
 	}
 }

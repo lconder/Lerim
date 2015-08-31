@@ -155,6 +155,9 @@ class Welcome extends CI_Controller {
 		$this->backButton();
 		$id=$this->uri->segment(3);
 		$datos=$this->modelo->mostrarAnalisis($id);
+		$fechas=$this->modelo->obtenerFechas($id);
+		$datos['fecha_analisis'] = $fechas['fecha_analisis'];
+		$datos['fecha_resultado'] = $fechas['fecha_resultado'];
 		$this->load->view('header');
 		$this->load->view('barra');
 		$this->load->view('Analisis',$datos);
