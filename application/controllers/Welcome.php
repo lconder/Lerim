@@ -88,7 +88,7 @@ class Welcome extends CI_Controller {
 			'hora'=>$this->input->post('hora'),
 			'tipo'=>$tipo,
 			'cliente'=>$this->input->post('cliente'),
-			'usuario'=>$this->session->userdata('usuario');
+			'usuario'=>$this->session->userdata('usuario')
 		);
 		$this->modelo->agregaMuestra($muestra);
 		redirect("Welcome/bio/".$this->input->post('cliente'));

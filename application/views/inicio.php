@@ -8,7 +8,7 @@
           <th >Email</th>
           <th >Dirección</th>
           <th >RFC</th>
-          <th >Agregar muestra</th>
+          <th >Opciones</th>
         </tr>
       </thead>
       <tfoot>
