@@ -18,7 +18,7 @@
         <ul class="nav navbar-nav navbar-right">
             <li><a href="https://login.secureserver.net/index.php" target="_blank">Correo</a></li>
             <li><a href="http://www.lerim.com.mx">Página</a></li>
-            <li><a href="http://www.lerim.com.mx/userManualLerim.pdf">Manual</a></li>
+            <li><a href="http://www.lerim.com.mx/userManualLerim.pdf" target="_blank">Manual</a></li>
             <li><a href="<?=base_url();?>index.php/Welcome/cerrarsesion">Cerrar Sesión</a></li>
            
         </ul>
