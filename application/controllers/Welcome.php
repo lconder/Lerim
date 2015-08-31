@@ -200,7 +200,11 @@ class Welcome extends CI_Controller {
 		
 		$id=$this->input->post('id');
 		$ids=$this->input->post('ids');
-		$this->modelo->actualizaAnalisis($id,$ids);
+		$fechas=array(
+				'fecha_analisis' => $this->input->post("fecha_analisis"),
+				'fecha_resultado' => $this->input->post("fecha_resultado")
+		);
+		$this->modelo->actualizaAnalisis($id,$ids,$fechas);
 		redirect("Welcome/muestras");
 	}
 

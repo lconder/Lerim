@@ -160,7 +160,7 @@ class modelo extends CI_Model
 	   return $dataArray;
 	}
 
-	public function actualizaAnalisis($id,$ids)
+	public function actualizaAnalisis($id,$ids,$fechas)
 	{
 		if(empty($ids))
 			return;
@@ -170,8 +170,8 @@ class modelo extends CI_Model
 				'resultado' => $this->input->post("resultado_".$selected),
 				'referencia' => $this->input->post("ref_".$selected),
 				'usuario' => $this->session->userdata('usuario'),
-				'fecha_analisis' => $this->input->post("fecha_analisis"),
-				'fecha_resultado' => $this->input->post("fecha_resultado")
+				'fecha_analisis' => $fechas['fecha_analisis'],
+				'fecha_resultado' => $fechas['fecha_resultado']
 			);
 			$this->db->where('muestra',$id);
 			$this->db->where('tipo',$selected);
