@@ -160,7 +160,7 @@ class modelo extends CI_Model
 	   return $dataArray;
 	}
 
-	public function actualizaAnalisis($id,$ids,$fechas)
+	public function actualizaAnalisis($id,$ids)
 	{
 		if(empty($ids))
 			return;
@@ -170,13 +170,21 @@ class modelo extends CI_Model
 				'resultado' => $this->input->post("resultado_".$selected),
 				'referencia' => $this->input->post("ref_".$selected),
 				'usuario' => $this->session->userdata('usuario'),
-				'fecha_analisis' => $fechas['fecha_analisis'],
-				'fecha_resultado' => $fechas['fecha_resultado']
 			);
 			$this->db->where('muestra',$id);
 			$this->db->where('tipo',$selected);
 			$this->db->update('analisis',$analisis);
 		}
+	}
+
+	public function actualizaFechas($id,$fechas)
+	{
+			$fechas=array(
+				'fecha_analisis' => $fechas['fecha_analisis'],
+				'fecha_resultado' => $fechas['fecha_resultado']
+			);
+			$this->db->where('id_muestra',$id);
+			$this->db->update('muestras',$fechas);
 	}
 
 	public function agregarTipoMuestra($nombre)
